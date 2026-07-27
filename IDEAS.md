@@ -1,6 +1,18 @@
-## Random Ideas
+# Ideas
+
+## Desktop
+- Voice commands
+- Open applications
+- Search Google
+
+## Vision
 - Hand-controlled cursor
-- Room automation
-- AI that remembers what i was working on 
-- Smart mirror integration
+- Face recognition
+
+## Room
+- Double clap wake-up
+- Smart lighting
+
+## Crazy Ideas
+- Smart mirror
 - Multi-room Jarvis
