@@ -11,12 +11,4 @@ Future Ideas:
 - Voice commands
 - Hand-controlled cursor
 - Room automation
-
-## Development Log
-
-### 27 July 2026
-- Created the Jarvis Project...file.
-- Goal: Build it gradually over years.
-- Current focus: Finish CS50 before writing Jarvis code.
-
-
+- AI that remembers what I was working on
