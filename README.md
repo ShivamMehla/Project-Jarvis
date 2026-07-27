@@ -1,6 +1,6 @@
 # JARVIS
 
-A person AI assistant that I will keep improving throughout college as I learn new concepts.
+A personal AI assistant that I will keep improving throughout college as I learn new concepts.
 
 Current Goal:
 - Complete CS50
