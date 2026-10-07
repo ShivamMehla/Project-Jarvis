@@ -1,27 +1,50 @@
 import datetime as dt
 from sys import exit
 import subprocess as sp
-from json import loads
-import time
+import json
 
 def main():
     while True:
         user = input("Ask Anything: ").strip().lower()
-        output = handle_commands(user)
+        command = identify_commands(user)
+        command_data = handle_commands(command, user)
+        output = execute_command(command_data)
         print(output)
 
     
-def handle_commands(u):
-    if "time" in u or "date" in u:
-        return get_time(u)
-    elif "date" in u:
-        return get_date()
-    elif "open" in u:
-        return open_app(u)
-    elif "exit" in u:
+def identify_commands(user):
+    if "time" in user or "date" in user:
+        return "get_time"
+    elif "open" in user:
+        return "open_app"
+    elif "exit" in user:
         exit(0)
     else:
+        return "unknown"
+
+
+def handle_commands(command, user):
+    if command == "get_time":
+        command_data = {"command": command, "argument": user}
+    elif command == "open_app":
+        if " " not in user:
+            command_data = {"command": command, "argument": None}
+        else:
+            _, name = user.split(" ", maxsplit=1)
+            command_data = {"command": command, "argument": name}
+    else:
+        command_data = {"command": command, "argument": None}
+    return command_data
+
+
+def execute_command(cd):
+    if cd["command"] == "unknown":
         return "I didn't get it."
+    if cd["command"] == "open_app" and cd["argument"] is None:
+        return "Which app do you want me to open?"
+    
+    commands = {"get_time": get_time, "open_app": open_app}
+    return commands[cd["command"]](cd["argument"])
 
 
 def get_time(u):
@@ -35,13 +58,9 @@ def get_time(u):
         return dt.datetime.now().strftime("Today is %d-%m-%Y")
 
 
-def get_date():
-    current_date = dt.datetime.now().str
-
-def open_app(a):
-    _, name = a.split(" ", maxsplit=1)
+def open_app(name):
     result = sp.run(["powershell.exe", "-Command", "ConvertTo-Json(Get-StartApps)"], capture_output=True, text=True)
-    apps = loads(result.stdout)
+    apps = json.loads(result.stdout)
 
     app_dict = {}
     for app in apps:
@@ -52,11 +71,12 @@ def open_app(a):
     else:
         result = sp.run(["powershell.exe", "-Command", f"convertto-json(get-command {name})"], capture_output=True, text=True)
         if result.stdout:
-            command = loads(result.stdout)
+            command = json.loads(result.stdout)
             sp.Popen(command["Path"])
             return f"Opening {name}"
         else:
             return f"I am not able to find any app with name {name} in your system."
+
     
 if __name__ == "__main__":
     main()
