@@ -7,8 +7,3 @@ Current Goal:
 - Learn Python
 - Start Jarvis Version 1
 
-Future Ideas:
-- Voice commands
-- Hand-controlled cursor
-- Room automation
-- AI that remembers what I was working on
